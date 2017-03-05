@@ -21,12 +21,21 @@ public class Data implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * The directory where the data file will be stored.
+	 */
 	private static File DIRECTORY_FILE = new File(System.getProperty("user.home") + System.getProperty("file.separator") +
 			"Schedule Creator");
 	
+	/**
+	 * The data file.
+	 */
 	private static File FILE = new File(System.getProperty("user.home") + System.getProperty("file.separator") +
 			"Schedule Creator" + System.getProperty("file.separator") + "data");
 	
+	/**
+	 * The Data object singleton.
+	 */
 	private static final Data DATA = new Data();
 	
 	// things to store	
@@ -36,7 +45,11 @@ public class Data implements Serializable{
 	private ArrayList<Group> groupList;
 	private ArrayList<Location> locationList;
 	
-	
+	/**
+	 * The constructor for Data objects. This will attempt to find the information file,
+	 * and if it does not find it, the constructor will create a new default file.
+	 * 
+	 */
 	private Data(){
 		try {
 			
@@ -99,6 +112,12 @@ public class Data implements Serializable{
  
 	}
 	
+	/**
+	 * This method is used to read the file that contains data upon the creation 
+	 * of the Data object.
+	 * 
+	 * @param readData The input stream that from the file to be read.
+	 */
 	private void readDataFromDisk(ObjectInputStream readData){
 		
 		try {
@@ -122,6 +141,10 @@ public class Data implements Serializable{
 		
 	}
 	
+	/**
+	 * This method writes information stored in the data object to the disk.
+	 * 
+	 */
 	public void writeDataToDisk(){
 		
 		ObjectOutputStream writeData;
@@ -142,26 +165,56 @@ public class Data implements Serializable{
 		
 	}
 	
+	/**
+	 * The method will get a reference to the data singleton.
+	 * 
+	 * @return Returns a reference to the data singleton.
+	 */
 	public static Data getData(){
 		return DATA;
 	}
 	
+	/**
+	 * This is the accessor for the preset lists.
+	 * 
+	 * @return Returns a reference to the Preset list
+	 */
 	public ArrayList<Preset> getPresetList(){
 		return presetList;
 	}
 	
+	/**
+	 * This is the accessor for the groups lists.
+	 * 
+	 * @return Returns a reference to the Group list
+	 */
 	public ArrayList<Group> getGroupList(){
 		return groupList;		
 	}
 	
+	/**
+	 * This is the accessor for the location lists.
+	 * 
+	 * @return Returns a reference to the Location list
+	 */
 	public ArrayList<Location> getLocationList(){
 		return locationList;		
 	}
 	
+	/**
+	 * This is the accessor for the random activity list.
+	 * 
+	 * @return Returns a reference to the Random activities list
+	 */
 	public ArrayList<RandomActivity> getRandomActivityList(){
 		return randomActivityList;		
 	}
 	
+	/**
+	 * This is the accessor for the planned activity list.
+	 * 
+	 * @return Returns a reference to the Planned activities list
+	 */
 	public ArrayList<PlannedActivity> getPlannedActivityList(){
 		return plannedActivityList;		
 	}
