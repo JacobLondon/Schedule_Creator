@@ -112,8 +112,9 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		JPanel timePanel = new JPanel();
 		JPanel activityPanel = new JPanel();
 		
+		//TODO
 		rightPane.addTab(TIMING_SETUP, timePanel);
-		rightPane.addTab(ACTIVITY_PLAN, activityPanel);
+		rightPane.addTab(ACTIVITY_PLAN, activityPlanPane);
 		
 		timePanel.setLayout(new BoxLayout(timePanel, BoxLayout.X_AXIS));
 		
@@ -197,7 +198,6 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		applyButton.setFont(Resources.Fonts.BUTTON_STANDARD);
 		
 		// add to left panel
-		
 		leftTimePanel.add(Box.createVerticalGlue());
 		leftTimePanel.add(selectPanel);
 		leftTimePanel.add(Box.createVerticalGlue());
@@ -227,8 +227,16 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		
 		presetPointer = new PresetPointer(Data.getData().getPresetList().get(0));
 		
-		// activity plan panel
-		//Vector 
+		//TODO
+		// activity plan panel (table with cells)
+		activityPlanTable = new PresetTable(presetPointer.preset);
+		activityPlanTable.setFillsViewportHeight(true);
+		
+		JLabel testLabel = new JLabel("test");
+		activityPlanPane = new JScrollPane(testLabel);
+		
+		activityPlanPane.getVerticalScrollBar().setUnitIncrement(16);
+		activityPlanPane.getHorizontalScrollBar().setUnitIncrement(16);
 		
 		
 		// set time panel sizes

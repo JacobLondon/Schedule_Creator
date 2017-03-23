@@ -11,13 +11,14 @@ import Resources.Data;
 
 public class ActivityPlanTableModel extends AbstractTableModel {
 
-	private Data data;
+	private Data data = Data.getData();
 	private Vector<Vector<JComboBox>> tableData;
 	private Vector<String> columnNames;
 	private Vector<String> timeVector;
 	private Preset preset;
 	
 	public ActivityPlanTableModel(Preset preset){
+		
 		
 		this.preset = preset;
 		
