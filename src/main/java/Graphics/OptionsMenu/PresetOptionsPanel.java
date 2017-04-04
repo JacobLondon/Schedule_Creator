@@ -116,6 +116,8 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		rightPane.addTab(TIMING_SETUP, timePanel);
 		rightPane.addTab(ACTIVITY_PLAN, activityPlanPane);
 		
+		rightPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		
 		timePanel.setLayout(new BoxLayout(timePanel, BoxLayout.X_AXIS));
 		
 		// timing panel setup
