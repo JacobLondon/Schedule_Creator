@@ -234,8 +234,7 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		activityPlanTable = new PresetTable(presetPointer.preset);
 		activityPlanTable.setFillsViewportHeight(true);
 		
-		JLabel testLabel = new JLabel("test");
-		activityPlanPane = new JScrollPane(testLabel);
+		activityPlanPane = new JScrollPane(activityPlanTable);
 		
 		activityPlanPane.getVerticalScrollBar().setUnitIncrement(16);
 		activityPlanPane.getHorizontalScrollBar().setUnitIncrement(16);
