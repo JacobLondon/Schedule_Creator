@@ -37,7 +37,7 @@ public class Preset implements Serializable {
 			
 		}
 	
-		presetSchedule = new String[countGroups][slotNumber];
+		presetSchedule = new String[slotNumber][countGroups];
 		Arrays.fill(presetSchedule[0], RANDOM_ACTIVITY);
 		Arrays.fill(presetSchedule, presetSchedule[0]);
 		

@@ -53,15 +53,16 @@ public class PresetTable extends JTable {
 		startingComboBox.setEditable(false);
 		comboBoxCellEditor = new DefaultCellEditor(startingComboBox);
 		
+		// sets the names of the columns and sets the number of rows to be correct amount in regard to how many slots there are
+		model.setColumnIdentifiers(columnNames);
+		model.setRowCount(currentPreset.getSlotNumber());
+		
 		// sets the cell editor
 		getColumnModel().getColumn(0).setCellEditor(defaultCellEditor);
 		for(int traverse = 1; traverse < columnNames.length; traverse++){
 			getColumnModel().getColumn(traverse).setCellEditor(comboBoxCellEditor);
 		}
-		
-		// sets the names of the columns and sets the number of rows to be correct amount in regard to how many slots there are
-		model.setColumnIdentifiers(columnNames);
-		model.setRowCount(currentPreset.getSlotNumber());
+
 		
 		// formats the times and fills the first column of the model with times
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh.mm a");

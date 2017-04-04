@@ -114,7 +114,7 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		
 		//TODO
 		rightPane.addTab(TIMING_SETUP, timePanel);
-		rightPane.addTab(ACTIVITY_PLAN, activityPlanPane);
+		rightPane.addTab(ACTIVITY_PLAN, activityPanel);
 		
 		rightPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
@@ -238,7 +238,7 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		
 		activityPlanPane.getVerticalScrollBar().setUnitIncrement(16);
 		activityPlanPane.getHorizontalScrollBar().setUnitIncrement(16);
-		
+		activityPanel.add(activityPlanPane);
 		
 		// set time panel sizes
 		leftTimePanel.setPreferredSize(new Dimension(180,279));
