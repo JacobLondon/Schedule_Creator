@@ -9,13 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
-				MenuWindow menu = new MenuWindow(new Graphics.MainMenu.MenuWindowListener(){
-					
-					public void windowClosed(){
-						System.exit(0);
-					}
-					
-				});
+				MenuWindow menu = new MenuWindow();
 			}
 		});
 		

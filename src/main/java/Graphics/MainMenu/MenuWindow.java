@@ -19,9 +19,8 @@ public class MenuWindow extends JFrame {
 	private OptionsMenu optionsMenu;
 	private CardLayout layout;
 	
-	private Vector<MenuWindowListener> windowListeners = new Vector<MenuWindowListener>();
 	
-	public MenuWindow(MenuWindowListener windowListener){
+	public MenuWindow(){
 		
 		super("Schedule Creator");
 		mainMenu = new MainMenu(this);
@@ -52,20 +51,11 @@ public class MenuWindow extends JFrame {
 	
 	@Override
 	public void dispose(){
-		
 		super.dispose();
-		notifyWindowClosed();
 		Data.getData().writeDataToDisk();
+		System.exit(0);
 		
 	}
 
-	public void notifyWindowClosed(){
-		
-		for(MenuWindowListener currentListener : windowListeners){
-			currentListener.windowClosed();
-		}
-		
-		
-	}
 	
 }
