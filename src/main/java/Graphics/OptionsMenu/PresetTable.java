@@ -19,7 +19,6 @@ public class PresetTable extends JTable {
 	private DefaultTableModel model;
 	private TableCellEditor defaultCellEditor = getDefaultEditor(String.class);
 	private TableCellEditor comboBoxCellEditor;
-	private Data data;
 	private boolean reformattingTable;
 	
 	public PresetTable(Preset startingPreset){
@@ -33,7 +32,6 @@ public class PresetTable extends JTable {
 				}
 			}
 		});
-		data = Data.getData();
 		setPreset(startingPreset);
 		
 	}
@@ -52,6 +50,7 @@ public class PresetTable extends JTable {
 	
 	/**
 	 * Sets up the table for the preset using the currently selected preset.
+	 * 
 	 * @param preset Will become the current selected preset.
 	 */
 	public void setPreset(Preset preset){

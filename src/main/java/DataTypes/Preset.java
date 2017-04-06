@@ -30,12 +30,7 @@ public class Preset implements Serializable {
 		intervalTime = DEFAULT_INTERVAL_TIME;
 		this.groupList = groupList;
 		
-		int countGroups = 0;
-		for(Group traverse : groupList){
-			
-			countGroups += traverse.getSubGroupCount();
-			
-		}
+		int countGroups = countSubgroups();
 	
 		presetSchedule = new String[slotNumber][countGroups];
 		Arrays.fill(presetSchedule[0], RANDOM_ACTIVITY);
@@ -43,6 +38,16 @@ public class Preset implements Serializable {
 			presetSchedule[i] = presetSchedule[0].clone();
 		}
 		
+	}
+	
+	private int countSubgroups(){
+		int countGroups = 0;
+		for(Group traverse : groupList){
+			
+			countGroups += traverse.getSubGroupCount();
+			
+		}
+		return countGroups;
 	}
 	
 	public String getNameIndex(int row, int column){
@@ -86,6 +91,37 @@ public class Preset implements Serializable {
 	public LocalTime getStartTime(){
 		
 		return startTime;
+	}
+
+	public void updateTime(int slotNumber, int intervalTime) {
+		int prevSlotNumber = this.slotNumber;
+		
+		setSlotNumber(slotNumber);
+		setIntervalTime(intervalTime);
+		
+		// Resize and fill the array
+		if(prevSlotNumber > slotNumber){
+			// Shrink down
+			String[][] oldSchedule = presetSchedule;
+			presetSchedule = new String[slotNumber][];
+			for(int i = 0; i < slotNumber; i++){
+				presetSchedule[i] = oldSchedule[i];
+			}
+		} else if(prevSlotNumber < slotNumber){
+			// Add more rows
+			String[][] oldSchedule = presetSchedule;
+			presetSchedule = new String[slotNumber][];
+			for(int i = 0; i < prevSlotNumber; i++){
+				presetSchedule[i] = oldSchedule[i];
+			}
+			presetSchedule[prevSlotNumber] = new String[countSubgroups()];
+			Arrays.fill(presetSchedule[prevSlotNumber], RANDOM_ACTIVITY);
+			for(int i = prevSlotNumber + 1; i < presetSchedule.length; i++){
+				presetSchedule[i] = presetSchedule[prevSlotNumber].clone();
+			}
+		} // Otherwise same number of rows
+			
+		
 	}
 
 }

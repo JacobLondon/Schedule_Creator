@@ -6,30 +6,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Vector;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
 
 import Backend.TimeConverter;
 import Backend.Updateable;
-import DataTypes.Group;
 import DataTypes.Preset;
 import Resources.Data;
 
@@ -42,7 +33,7 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 	private JTextField intervalField;
 	private JTextField startHourField;
 	private JTextField startMinuteField;
-	private JComboBox startBox;
+	private JComboBox<String> startBox;
 	private JTextField slotField;
 	private JButton applyButton;
 	private JTabbedPane rightPane;
@@ -144,7 +135,7 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		startFieldPanel.setLayout(new BoxLayout(startFieldPanel, BoxLayout.X_AXIS));
 		startHourField = new JTextField(3);
 		startMinuteField = new JTextField(3);
-		startBox = new JComboBox();
+		startBox = new JComboBox<String>();
 		JLabel colonLabel = new JLabel(":");
 		startHourField.setMaximumSize(new Dimension(40,38));
 		startMinuteField.setMaximumSize(new Dimension(40,38));
@@ -283,11 +274,10 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 	}
 	
 	public void update(){
-		//System.err.println("update" + updateRightPanelFlag);
+
 		if(updateRightPanelFlag){
 			updateTime();
-			presetPointer.preset.setSlotNumber(Integer.parseInt("0" + slotField.getText()));
-			presetPointer.preset.setIntervalTime((Integer.parseInt("0" + intervalField.getText())));
+			presetPointer.preset.updateTime(Integer.parseInt("0" + slotField.getText()), Integer.parseInt("0" + intervalField.getText()));
 			updateRightPanel();
 		}
 		
