@@ -5,10 +5,10 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableModel;
-
 import DataTypes.Preset;
 import Resources.Data;
 
@@ -19,14 +19,35 @@ public class PresetTable extends JTable {
 	private DefaultTableModel model;
 	private TableCellEditor defaultCellEditor = getDefaultEditor(String.class);
 	private TableCellEditor comboBoxCellEditor;
+	private Data data;
+	private boolean reformattingTable;
 	
 	public PresetTable(Preset startingPreset){
 		
 		super(new DefaultTableModel());
 		model = (DefaultTableModel) getModel();
+		model.addTableModelListener(new TableModelListener(){
+			public void tableChanged(TableModelEvent e){
+				if(!reformattingTable){
+					updateDataFromTable(e.getFirstRow(), e.getColumn());
+				}
+			}
+		});
+		data = Data.getData();
 		setPreset(startingPreset);
 		
-		
+	}
+	
+	/**
+	 * This will update the data object when an item is changed in the jtable.
+	 * 
+	 * @param row The row that was updated
+	 * @param col The column that was updated
+	 */
+	private void updateDataFromTable(int row, int col){
+		int timeSlot = row;
+		int groupNumber = col - 1;
+		currentPreset.setNameIndex(timeSlot, groupNumber, (String) model.getValueAt(row, col));
 	}
 	
 	/**
@@ -35,6 +56,7 @@ public class PresetTable extends JTable {
 	 */
 	public void setPreset(Preset preset){
 		
+		reformattingTable = true;
 		currentPreset = preset;
 		
 		// makes an array of column names
@@ -52,6 +74,7 @@ public class PresetTable extends JTable {
 		}
 		startingComboBox.setEditable(false);
 		comboBoxCellEditor = new DefaultCellEditor(startingComboBox);
+		
 		
 		// sets the names of the columns and sets the number of rows to be correct amount in regard to how many slots there are
 		model.setColumnIdentifiers(columnNames);
@@ -80,6 +103,7 @@ public class PresetTable extends JTable {
 		
 		setVisible(true);
 		validate();
+		reformattingTable = false;
 	}
 	
 }

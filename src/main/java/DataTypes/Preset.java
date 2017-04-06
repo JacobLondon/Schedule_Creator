@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class Preset implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
 	private String name;
 	private LocalTime startTime;
@@ -39,12 +39,18 @@ public class Preset implements Serializable {
 	
 		presetSchedule = new String[slotNumber][countGroups];
 		Arrays.fill(presetSchedule[0], RANDOM_ACTIVITY);
-		Arrays.fill(presetSchedule, presetSchedule[0]);
+		for(int i = 1; i < presetSchedule.length; i++){
+			presetSchedule[i] = presetSchedule[0].clone();
+		}
 		
 	}
 	
 	public String getNameIndex(int row, int column){
 		return presetSchedule[row][column];
+	}
+	
+	public void setNameIndex(int row, int column, String value){
+		presetSchedule[row][column] = value;
 	}
 	
 	public String getName(){
