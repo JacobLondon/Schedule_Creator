@@ -2,7 +2,6 @@ package Graphics.OptionsMenu;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,7 +13,6 @@ import javax.swing.JScrollPane;
 
 import DataTypes.Preset;
 import Graphics.OptionsMenu.PresetOptionsPanel.PresetPointer;
-import Resources.Data;
 import Resources.Fonts;
 
 public class PresetPanel extends JPanel {

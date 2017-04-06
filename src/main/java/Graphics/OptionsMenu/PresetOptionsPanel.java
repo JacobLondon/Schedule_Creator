@@ -51,7 +51,7 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 	private JLabel selectLabel;
 	private JPanel selectPanel;
 	private JButton deleteButton;
-	private JTable activityPlanTable;
+	private PresetTable activityPlanTable;
 	private JScrollPane activityPlanPane;
 	
 	private DocumentListener minuteStartDocListener = null;
@@ -307,6 +307,8 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 	public void updateRightPanel(){
 		
 		updateRightPanelFlag = false;
+		
+		activityPlanTable.setPreset(presetPointer.preset);
 		
 		if(applyButton.getActionListeners().length > 0){
 			for(ActionListener listen : applyButton.getActionListeners()){
