@@ -1,5 +1,6 @@
 package Graphics.OptionsMenu;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -102,6 +103,7 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		
 		JPanel timePanel = new JPanel();
 		JPanel activityPanel = new JPanel();
+		activityPanel.setLayout(new BorderLayout());
 		
 		//TODO
 		rightPane.addTab(TIMING_SETUP, timePanel);
@@ -229,7 +231,7 @@ public class PresetOptionsPanel extends JPanel implements Updateable{
 		
 		activityPlanPane.getVerticalScrollBar().setUnitIncrement(16);
 		activityPlanPane.getHorizontalScrollBar().setUnitIncrement(16);
-		activityPanel.add(activityPlanPane);
+		activityPanel.add(activityPlanPane, BorderLayout.CENTER);
 		
 		// set time panel sizes
 		leftTimePanel.setPreferredSize(new Dimension(180,279));

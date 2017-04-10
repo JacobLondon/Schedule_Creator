@@ -8,13 +8,13 @@ import java.util.Arrays;
 
 public class Preset implements Serializable {
 
-	private static final long serialVersionUID = 2L;
+	private static final long serialVersionUID = 3L;
 	
 	private String name;
 	private LocalTime startTime;
 	private int slotNumber;
 	private int intervalTime;
-	private String[][] presetSchedule;
+	private ArrayList<ArrayList<String>> presetSchedule;
 	private ArrayList<Group> groupList;
 	
 	private static final LocalTime DEFAULT_START_TIME = LocalTime.of(9, 0);
@@ -32,12 +32,13 @@ public class Preset implements Serializable {
 		
 		int countGroups = countSubgroups();
 	
-		presetSchedule = new String[slotNumber][countGroups];
-		Arrays.fill(presetSchedule[0], RANDOM_ACTIVITY);
-		for(int i = 1; i < presetSchedule.length; i++){
-			presetSchedule[i] = presetSchedule[0].clone();
-		}
-		
+		presetSchedule = new ArrayList<ArrayList<String>>();		
+		for(int row = 0; row < DEFAULT_SLOT_NUMBER; row++){
+			presetSchedule.add(new ArrayList<String>());
+			for(int column = 0; column < countGroups; column++){
+				presetSchedule.get(row).add(RANDOM_ACTIVITY);
+			}	
+		}		
 	}
 	
 	private int countSubgroups(){
@@ -50,12 +51,24 @@ public class Preset implements Serializable {
 		return countGroups;
 	}
 	
+	public void addColumn(){
+		for(int traverse = 0; traverse < presetSchedule.size(); traverse++){
+			presetSchedule.get(traverse).add(RANDOM_ACTIVITY);
+		}
+	}
+	
+	public void removeColumn(int indexToRemove){
+		for(int traverse = 0; traverse < presetSchedule.size(); traverse++){
+			presetSchedule.get(traverse).remove(indexToRemove);
+		}
+	}
+	
 	public String getNameIndex(int row, int column){
-		return presetSchedule[row][column];
+		return presetSchedule.get(row).get(column);
 	}
 	
 	public void setNameIndex(int row, int column, String value){
-		presetSchedule[row][column] = value;
+		presetSchedule.get(row).set(column, value);
 	}
 	
 	public String getName(){
@@ -99,28 +112,20 @@ public class Preset implements Serializable {
 		setSlotNumber(slotNumber);
 		setIntervalTime(intervalTime);
 		
-		// Resize and fill the array
 		if(prevSlotNumber > slotNumber){
-			// Shrink down
-			String[][] oldSchedule = presetSchedule;
-			presetSchedule = new String[slotNumber][];
-			for(int i = 0; i < slotNumber; i++){
-				presetSchedule[i] = oldSchedule[i];
+			while(presetSchedule.size() > slotNumber){
+				presetSchedule.remove(presetSchedule.size() - 1);
 			}
-		} else if(prevSlotNumber < slotNumber){
-			// Add more rows
-			String[][] oldSchedule = presetSchedule;
-			presetSchedule = new String[slotNumber][];
-			for(int i = 0; i < prevSlotNumber; i++){
-				presetSchedule[i] = oldSchedule[i];
+		}
+		else if(prevSlotNumber < slotNumber){
+			while(presetSchedule.size() < slotNumber){
+				ArrayList<String> randomArrayList = new ArrayList<String>();
+				for(int traverse = 0; traverse < countSubgroups(); traverse ++){
+					randomArrayList.add(RANDOM_ACTIVITY);
+				}
+				presetSchedule.add(randomArrayList);
 			}
-			presetSchedule[prevSlotNumber] = new String[countSubgroups()];
-			Arrays.fill(presetSchedule[prevSlotNumber], RANDOM_ACTIVITY);
-			for(int i = prevSlotNumber + 1; i < presetSchedule.length; i++){
-				presetSchedule[i] = presetSchedule[prevSlotNumber].clone();
-			}
-		} // Otherwise same number of rows
-			
+		}
 		
 	}
 

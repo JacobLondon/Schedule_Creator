@@ -72,6 +72,12 @@ public class GroupPanel extends JPanel{
 		deleteButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
+				
+				int groupIndex = Data.getData().getGroupList().indexOf(group);
+				for(int traverse = 0; traverse < Data.getData().getPresetList().size(); traverse++){
+					Data.getData().getPresetList().get(traverse).removeColumn(groupIndex);
+				}
+				
 				thisReference.getParent().remove(thisReference);
 				Data.getData().getGroupList().remove(group);
 				parentPane.validate();

@@ -88,6 +88,9 @@ public class CampInfoPanel extends JPanel {
 					Data.getData().getGroupList().add(newGroup);
 					GroupPanel groupPanel = new GroupPanel(newGroup, groupScrollPane);
 					groupScrollPanel.add(groupPanel);
+					
+					// loop through the presets and add a column to the end of the preset array
+					
 					addField.setText("");							
 					validate();
 				}	

@@ -25,6 +25,7 @@ public class Layout {
 	public static final Dimension QUAD_ADDER_PANEL = new Dimension(170,38);
 	public static final Dimension QUAD_SCROLL_PANEL_ADDER = new Dimension(170,279);
 	
-	
+	// Activity Table
+	public static final int TIME_WIDTH = 100;
 	
 }

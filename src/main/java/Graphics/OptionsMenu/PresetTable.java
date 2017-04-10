@@ -9,6 +9,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+
 import DataTypes.Preset;
 import Resources.Data;
 
@@ -67,6 +69,8 @@ public class PresetTable extends JTable {
 
 		// fills the combo box with random and the planned activities
 		JComboBox<String> startingComboBox = new JComboBox<String>();
+		Resources.Format.formatActivityTableBox(startingComboBox);
+		
 		startingComboBox.addItem("Random");
 		for(int traverse = 0; traverse < Data.getData().getPlannedActivityList().size(); traverse++){
 			startingComboBox.addItem(Data.getData().getPlannedActivityList().get(traverse).getName());
@@ -85,9 +89,8 @@ public class PresetTable extends JTable {
 			getColumnModel().getColumn(traverse).setCellEditor(comboBoxCellEditor);
 		}
 
-		
 		// formats the times and fills the first column of the model with times
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh.mm a");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
 		for(int count = 0; count < preset.getSlotNumber(); count++){
 			model.setValueAt(preset.getStartTime().plusMinutes(preset.getIntervalTime() * (count)).format(formatter) +
 					" - " + preset.getStartTime().plusMinutes(preset.getIntervalTime() * (count + 1)).format(formatter), count, 0);
@@ -98,6 +101,18 @@ public class PresetTable extends JTable {
 			for(int row = 0; row < preset.getSlotNumber(); row++){
 				model.setValueAt(currentPreset.getNameIndex(row, column - 1), row, column);
 			}
+		}
+		
+		// make columns wider and rows taller
+		setRowHeight(30);
+		TableColumn column = null;
+		for(int traverse = 0; traverse < getColumnCount(); traverse++){
+			column = getColumnModel().getColumn(traverse);
+			if(traverse == 0){
+				column.setPreferredWidth(Resources.Layout.TIME_WIDTH);
+				column.setMinWidth(Resources.Layout.TIME_WIDTH);
+			}
+			
 		}
 		
 		setVisible(true);
