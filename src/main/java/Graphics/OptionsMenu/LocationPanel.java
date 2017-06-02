@@ -50,4 +50,9 @@ public class LocationPanel extends JPanel {
 	public Location getCurrentLocation(){
 		return location;
 	}
+
+	public void updateLocation() {
+		locationLabel.setText(location.getName());
+		validate();
+	}
 }

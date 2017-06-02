@@ -119,9 +119,15 @@ public class LocationOptionsPanel extends JPanel{
 		for(LocationPanel panel : locationPanelList){
 			if(panel.getCurrentLocation().equals(currentLocation)){
 				remove(panel);
+			} else {
+				panel.updateLocation();
 			}
 		}
 		validate();
+	}
+
+	public void updateLocationList() {
+		updateLocationList(null);
 	}
 	
 }

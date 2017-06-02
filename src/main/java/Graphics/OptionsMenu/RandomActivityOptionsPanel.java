@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import DataTypes.Location;
 import DataTypes.RandomActivity;
 import Resources.Data;
 

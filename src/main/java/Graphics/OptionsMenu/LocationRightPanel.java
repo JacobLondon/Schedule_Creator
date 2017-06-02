@@ -52,13 +52,18 @@ public class LocationRightPanel extends JPanel {
 			public void actionPerformed(ActionEvent e){
 				currentLocation.setName(nameField.getText());
 				currentLocation.getLocationColor().setColor(color.getColor());
+				locationOptionsPanel.updateLocationList();
 			}
 		};
 		deleteListener = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				data.getLocationList().remove(data.getLocationList().indexOf(currentLocation));
+				data.writeDataToDisk();
 				locationOptionsPanel.updateLocationList(currentLocation);
 			}
 		};
+		
+		save.addActionListener(saveListener);
+		delete.addActionListener(deleteListener);
 	}
 }

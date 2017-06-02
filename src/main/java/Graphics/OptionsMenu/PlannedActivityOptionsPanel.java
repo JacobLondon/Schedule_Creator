@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import DataTypes.Location;
 import DataTypes.PlannedActivity;
 import Resources.Data;
 
@@ -24,6 +23,7 @@ public class PlannedActivityOptionsPanel extends JPanel {
 	private JPanel addScrollPanel;
 	private JScrollPane addScrollPane;
 	private ArrayList<PlannedActivityPanel> plannedActivityPanelList = new ArrayList<PlannedActivityPanel>();
+	private PlannedActivityRightPanel rightPanel;
 	
 	public PlannedActivityOptionsPanel(){
 		
@@ -31,9 +31,7 @@ public class PlannedActivityOptionsPanel extends JPanel {
 		
 		// panel creation
 		JPanel leftPanel = new JPanel();
-		JPanel rightPanel = new JPanel();
 		leftPanel.setPreferredSize(Resources.Layout.DOUBLE_PANEL);
-		rightPanel.setPreferredSize(Resources.Layout.DOUBLE_PANEL);
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 		
 		// left panel
@@ -66,21 +64,37 @@ public class PlannedActivityOptionsPanel extends JPanel {
 		leftPanel.add(Box.createVerticalGlue());
 		
 		add(leftPanel);
-		add(rightPanel);
 		
-		for(PlannedActivity plannedActivity : Data.getData().getPlannedActivityList()){
-			PlannedActivityPanel plannedActivityPanel = new PlannedActivityPanel(plannedActivity);
+		PlannedActivity currentActivity = null;
+		for(final PlannedActivity plannedActivity : Data.getData().getPlannedActivityList()){
+			if(currentActivity == null){
+				currentActivity = plannedActivity;
+			}
+			PlannedActivityPanel plannedActivityPanel = new PlannedActivityPanel(plannedActivity, new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					selectCurrentActivity(plannedActivity);
+				}
+			});
 			addScrollPanel.add(plannedActivityPanel);
 			plannedActivityPanelList.add(plannedActivityPanel);
 		}
+		
+		rightPanel = new PlannedActivityRightPanel(currentActivity, this);
+		rightPanel.setPreferredSize(Resources.Layout.DOUBLE_PANEL);
+
+		add(rightPanel);
 		
 		ActionListener addListener = new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
 				if(addField.getText().length() > 0){
-					PlannedActivity newPlannedActivity = new PlannedActivity(addField.getText(), 30, Data.getData().getLocationList().get(0));
+					final PlannedActivity newPlannedActivity = new PlannedActivity(addField.getText(), 30, Data.getData().getLocationList().get(0));
 					Data.getData().getPlannedActivityList().add(newPlannedActivity);
-					PlannedActivityPanel plannedActivityPanel = new PlannedActivityPanel(newPlannedActivity);
+					PlannedActivityPanel plannedActivityPanel = new PlannedActivityPanel(newPlannedActivity, new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+							selectCurrentActivity(newPlannedActivity);
+						}
+					});
 					addScrollPanel.add(plannedActivityPanel);
 					addField.setText("");
 					validate();
@@ -96,4 +110,22 @@ public class PlannedActivityOptionsPanel extends JPanel {
 		
 	}
 	
+	private void selectCurrentActivity(PlannedActivity activity){
+		rightPanel.setCurrentActivity(activity);
+	}
+
+	public void updateActivityList() {
+		updateActivityList(null);
+	}
+
+	public void updateActivityList(PlannedActivity currentActivity) {
+		for(PlannedActivityPanel panel : plannedActivityPanelList){
+			if(panel.getCurrentActivity().equals(currentActivity)){
+				remove(panel);
+			} else {
+				panel.updateLocation();
+			}
+		}
+	}
+
 }

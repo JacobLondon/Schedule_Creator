@@ -16,9 +16,11 @@ import DataTypes.PlannedActivity;
 public class PlannedActivityPanel extends JPanel {
 
 	private JLabel plannedActivityLabel;
+	private PlannedActivity plannedActivity;
 	
-	public PlannedActivityPanel(PlannedActivity plannedActivity){
+	public PlannedActivityPanel(PlannedActivity plannedActivity, ActionListener listener){
 		super();
+		this.plannedActivity = plannedActivity;
 		setLayout(new GridLayout(1,2));
 		
 		plannedActivityLabel = new JLabel(plannedActivity.getName());
@@ -38,16 +40,18 @@ public class PlannedActivityPanel extends JPanel {
 		add(useButton);
 		//add(Box.createHorizontalGlue());
 		
-		useButton.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-			
-		});
+		useButton.addActionListener(listener);
 		
 		setMinimumSize(new Dimension(200,450));
 		setPreferredSize(new Dimension(354,69));
+	}
+
+	public PlannedActivity getCurrentActivity() {
+		return plannedActivity;
+	}
+
+	public void updateLocation() {
+		plannedActivityLabel.setText(plannedActivity.getName());
 	}
 	
 }
