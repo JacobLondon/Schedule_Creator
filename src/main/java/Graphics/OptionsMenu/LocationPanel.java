@@ -18,11 +18,13 @@ import DataTypes.Location;
 public class LocationPanel extends JPanel {
 
 	private JLabel locationLabel;
+	private Location location;
 	
-	public LocationPanel(Location location){
+	public LocationPanel(Location location, ActionListener selectListener){
 		super();
 		setLayout(new GridLayout(1,2));
 		
+		this.location = location;
 		locationLabel = new JLabel(location.getName());
 		
 		JButton useButton = new JButton("Select");
@@ -40,15 +42,12 @@ public class LocationPanel extends JPanel {
 		add(useButton);
 		//add(Box.createHorizontalGlue());
 		
-		useButton.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-			
-		});
-		
+		useButton.addActionListener(selectListener);
 		setMinimumSize(new Dimension(200,450));
 		setPreferredSize(new Dimension(354,69));
 	}	
+	
+	public Location getCurrentLocation(){
+		return location;
+	}
 }

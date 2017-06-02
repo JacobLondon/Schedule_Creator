@@ -25,6 +25,8 @@ public class LocationOptionsPanel extends JPanel{
 	private JPanel addScrollPanel;
 	private JScrollPane addScrollPane;
 	private ArrayList<LocationPanel> locationPanelList = new ArrayList<LocationPanel>();
+	private Location currentLocation;
+	private LocationRightPanel rightPanel;
 	
 	public LocationOptionsPanel(){
 		super();
@@ -36,7 +38,6 @@ public class LocationOptionsPanel extends JPanel{
 		JPanel locationAdder = new JPanel();
 		locationAdder.setLayout(new BoxLayout(locationAdder, BoxLayout.Y_AXIS));
 		
-		JPanel locationOptions = new JPanel();
 		JPanel adderPanel = new JPanel();
 		adderPanel.setPreferredSize(Resources.Layout.DOUBLE_ADDER_PANEL);
 		addField = new JTextField(15);
@@ -50,7 +51,6 @@ public class LocationOptionsPanel extends JPanel{
 		adderPanel.add(addButton);
 		
 		locationAdder.setPreferredSize(Resources.Layout.DOUBLE_PANEL);
-		locationOptions.setPreferredSize(Resources.Layout.DOUBLE_PANEL);
 		
 		addScrollPanel = new JPanel();
 		addScrollPanel.setLayout(new BoxLayout(addScrollPanel, BoxLayout.Y_AXIS));
@@ -70,21 +70,34 @@ public class LocationOptionsPanel extends JPanel{
 		locationAdder.add(Box.createVerticalGlue());
 		add(locationAdder);
 		
-		add(locationOptions);
-		
-		for(Location location : Data.getData().getLocationList()){
-			LocationPanel locationPanel = new LocationPanel(location);
+		for(final Location location : Data.getData().getLocationList()){
+			if(currentLocation == null){
+				currentLocation = location;
+			}
+			LocationPanel locationPanel = new LocationPanel(location, new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					selectLocation(location);
+				}
+			});
 			addScrollPanel.add(locationPanel);
 			locationPanelList.add(locationPanel);
 		}
+		
+		rightPanel = new LocationRightPanel(currentLocation, this);
+		add(rightPanel);
+		
 		
 		ActionListener addListener = new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
 				if(addField.getText().length() > 0){
-					Location newLocation = new Location(addField.getText());
+					final Location newLocation = new Location(addField.getText());
 					Data.getData().getLocationList().add(newLocation);
-					LocationPanel locationPanel = new LocationPanel(newLocation);
+					LocationPanel locationPanel = new LocationPanel(newLocation, new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+							selectLocation(newLocation);
+						}
+					});
 					addScrollPanel.add(locationPanel);
 					addField.setText("");
 					validate();
@@ -95,6 +108,19 @@ public class LocationOptionsPanel extends JPanel{
 		addButton.addActionListener(addListener);
 		addField.addActionListener(addListener);
 		
+		validate();
+	}
+	
+	public void selectLocation(Location location){
+		rightPanel.setCurrentLocation(location);
+	}
+
+	public void updateLocationList(Location currentLocation) {
+		for(LocationPanel panel : locationPanelList){
+			if(panel.getCurrentLocation().equals(currentLocation)){
+				remove(panel);
+			}
+		}
 		validate();
 	}
 	
