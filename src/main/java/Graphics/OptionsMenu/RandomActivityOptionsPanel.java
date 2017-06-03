@@ -24,7 +24,9 @@ public class RandomActivityOptionsPanel extends JPanel {
 	private JPanel addScrollPanel;
 	private JScrollPane addScrollPane;
 	private ArrayList<RandomActivityPanel> randomActivityPanelList = new ArrayList<RandomActivityPanel>();
-	
+	private JTextField
+	private JButton
+	private JButton
 	
 	public RandomActivityOptionsPanel(){
 		
@@ -73,6 +75,8 @@ public class RandomActivityOptionsPanel extends JPanel {
 		mainPanel.add(leftPanel);
 		mainPanel.add(centerPanel);
 		mainPanel.add(rightPanel);
+		
+		//
 		
 		add(activityLabel, BorderLayout.NORTH);
 		add(mainPanel, BorderLayout.CENTER);
