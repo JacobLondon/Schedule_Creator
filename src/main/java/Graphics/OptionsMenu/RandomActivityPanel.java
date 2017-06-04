@@ -7,26 +7,30 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import DataTypes.Location;
 import DataTypes.RandomActivity;
 
 public class RandomActivityPanel extends JPanel {
 
 	private JLabel randomActivityLabel;
+	private RandomActivity randomActivity;
 	
-	public RandomActivityPanel(RandomActivity randomActivity) {
+	public RandomActivityPanel(RandomActivity randomActivity, ActionListener selectListener) {
 		super();
-		setLayout(new GridLayout(1,2));
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.randomActivity = randomActivity;
 		
 		randomActivityLabel = new JLabel(randomActivity.getName());
 		
-		JButton useButton = new JButton("Select");
+		JButton selectButton = new JButton("Select");
 		
 		randomActivityLabel.setFont(Resources.Fonts.SMALL_TITLE);
-		useButton.setFont(Resources.Fonts.BUTTON_STANDARD);
+		selectButton.setFont(Resources.Fonts.BUTTON_STANDARD);
 		
 		randomActivityLabel.setAlignmentX(CENTER_ALIGNMENT);
 		
@@ -35,18 +39,15 @@ public class RandomActivityPanel extends JPanel {
 		add(Box.createHorizontalGlue());
 		add(randomActivityLabel);
 		add(Box.createHorizontalGlue());
-		add(useButton);
+		add(selectButton);
 		//add(Box.createHorizontalGlue());
 		
-		useButton.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-			
-		});
-		
-		setMinimumSize(new Dimension(200,450));
-		setPreferredSize(new Dimension(354,69));
+		selectButton.addActionListener(selectListener);
+		setMinimumSize(new Dimension(100,150));
+		setPreferredSize(new Dimension(100,150));
+	}
+	
+	public RandomActivity getCurrentRandomActivity(){
+		return randomActivity;
 	}
 }

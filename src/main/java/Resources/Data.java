@@ -114,9 +114,9 @@ public class Data implements Serializable{
 		locationList.add(new Location("Room 2"));
 		locationList.add(new Location("Room 3"));
 		
-		randomActivityList.add(new RandomActivity("Random Activity 1", locationList));
-		randomActivityList.add(new RandomActivity("Random Activity 2", locationList));
-		randomActivityList.add(new RandomActivity("Random Activity 3", locationList));
+		randomActivityList.add(new RandomActivity("Random Activity 1", locationList, groupList));
+		randomActivityList.add(new RandomActivity("Random Activity 2", locationList, groupList));
+		randomActivityList.add(new RandomActivity("Random Activity 3", locationList, groupList));
 		
 		plannedActivityList.add(new PlannedActivity("Planned Activity 1", 30, locationList.get(0) ));
 		plannedActivityList.add(new PlannedActivity("Planned Activity 2", 30, locationList.get(1) ));

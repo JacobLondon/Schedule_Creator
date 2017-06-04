@@ -111,7 +111,7 @@ public class LocationOptionsPanel extends JPanel{
 		validate();
 	}
 	
-	public void selectLocation(Location location){
+	private void selectLocation(Location location){
 		rightPanel.setCurrentLocation(location);
 	}
 

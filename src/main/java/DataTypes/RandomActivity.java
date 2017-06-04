@@ -3,6 +3,8 @@ package DataTypes;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.Icon;
+
 public class RandomActivity implements Serializable {
 
 	private static final long serialVersionUID = 2L;
@@ -49,5 +51,9 @@ public class RandomActivity implements Serializable {
 	public boolean locationIsInLocationList(Location location){
 		return locationList.contains(location);
 		
+	}
+
+	public boolean groupIsIngroupList(Group group) {
+		return groupList.contains(group);
 	}
 }

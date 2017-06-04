@@ -58,7 +58,6 @@ public class LocationRightPanel extends JPanel {
 		deleteListener = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				data.getLocationList().remove(data.getLocationList().indexOf(currentLocation));
-				data.writeDataToDisk();
 				locationOptionsPanel.updateLocationList(currentLocation);
 			}
 		};

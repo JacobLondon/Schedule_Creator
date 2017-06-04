@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import DataTypes.Location;
 import DataTypes.RandomActivity;
 import Resources.Data;
 
@@ -24,9 +25,13 @@ public class RandomActivityOptionsPanel extends JPanel {
 	private JPanel addScrollPanel;
 	private JScrollPane addScrollPane;
 	private ArrayList<RandomActivityPanel> randomActivityPanelList = new ArrayList<RandomActivityPanel>();
-	private JTextField
-	private JButton
-	private JButton
+	private JTextField nameField;
+	private JButton applyButton;
+	private JButton deleteButton;
+	private LocationSelectorPanel centerPanel;
+	private GroupSelectorPanel rightPanel;
+	
+	private RandomActivity currentRandomActivity;
 	
 	public RandomActivityOptionsPanel(){
 		
@@ -37,11 +42,16 @@ public class RandomActivityOptionsPanel extends JPanel {
 		
 		// Sub-panel creation
 		JPanel leftPanel = new JPanel();
-		JPanel centerPanel = new JPanel();
-		JPanel rightPanel = new JPanel();
+		
+		//TODO: no location and no group cases
+		centerPanel = new LocationSelectorPanel(Data.getData().getRandomActivityList().get(0));
+		rightPanel = new GroupSelectorPanel(Data.getData().getRandomActivityList().get(0));
+		
 		leftPanel.setPreferredSize(Resources.Layout.TRIPLE_PANEL);
 		centerPanel.setPreferredSize(Resources.Layout.TRIPLE_PANEL);
+		centerPanel.setMinimumSize(Resources.Layout.TRIPLE_PANEL);
 		rightPanel.setPreferredSize(Resources.Layout.TRIPLE_PANEL);
+		rightPanel.setMinimumSize(Resources.Layout.TRIPLE_PANEL);
 		
 		// left panel setup
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
@@ -76,13 +86,21 @@ public class RandomActivityOptionsPanel extends JPanel {
 		mainPanel.add(centerPanel);
 		mainPanel.add(rightPanel);
 		
-		//
-		
 		add(activityLabel, BorderLayout.NORTH);
 		add(mainPanel, BorderLayout.CENTER);
 		
-		for(RandomActivity randomActivity : Data.getData().getRandomActivityList()){
-			RandomActivityPanel randomActivityPanel = new RandomActivityPanel(randomActivity);
+		for(final RandomActivity randomActivity : Data.getData().getRandomActivityList()){
+			
+			
+			if(currentRandomActivity == null){
+				currentRandomActivity = randomActivity;
+			}
+			RandomActivityPanel randomActivityPanel = new RandomActivityPanel(randomActivity, new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					selectRandomActivity(randomActivity);
+				}
+			});
+			
 			addScrollPanel.add(randomActivityPanel);
 			randomActivityPanelList.add(randomActivityPanel);
 		}
@@ -91,9 +109,13 @@ public class RandomActivityOptionsPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 				if(addField.getText().length() > 0){
-					RandomActivity newRandomActivity = new RandomActivity(addField.getText(), Data.getData().getLocationList());
+					final RandomActivity newRandomActivity = new RandomActivity(addField.getText(), Data.getData().getLocationList(), Data.getData().getGroupList());
 					Data.getData().getRandomActivityList().add(newRandomActivity);
-					RandomActivityPanel randomActivityPanel = new RandomActivityPanel(newRandomActivity);
+					RandomActivityPanel randomActivityPanel = new RandomActivityPanel(newRandomActivity, new ActionListener(){
+						public void actionPerformed(ActionEvent e) {
+							selectRandomActivity(newRandomActivity);
+						}
+					});
 					addScrollPanel.add(randomActivityPanel);
 					addField.setText("");
 					validate();
@@ -101,11 +123,29 @@ public class RandomActivityOptionsPanel extends JPanel {
 			}
 		};
 		
+		
 		addButton.addActionListener(addListener);
 		addField.addActionListener(addListener);
 		
 		validate();
 		
 	}
+
+	private void selectRandomActivity(RandomActivity randomActivity) {
+		rightPanel.setCurrentRandomActivity(randomActivity);
+		centerPanel.setCurrentRandomActivity(randomActivity);
+		
+	}
 	
+	public void updateRandomActivityList(RandomActivity currentRandomActivity) {
+		for(RandomActivityPanel panel : randomActivityPanelList){
+			if(panel.getCurrentRandomActivity().equals(currentRandomActivity)){
+				remove(panel);
+			} else {
+				panel.updateRandomActivity();
+			}
+		}
+		validate();
+	}
+
 }
