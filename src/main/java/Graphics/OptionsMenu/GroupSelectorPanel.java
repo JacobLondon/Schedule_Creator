@@ -66,12 +66,13 @@ public class GroupSelectorPanel extends JPanel {
 			groupList.add(groupCheckBox);
 		}
 		groupScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+		setCurrentRandomActivity(currentRandomActivity);
 		validate();
 	}
 	
 	class GetGroupSelectorInfo{
 		
-		public ArrayList<Group> groupList;
+		public ArrayList<Group> groupList = new ArrayList<Group>();
 		public GetGroupSelectorInfo(ArrayList<GroupCheckBox> groupCheckBoxList){
 			for(GroupCheckBox groupCheck : groupCheckBoxList){
 				if(groupCheck.isSelected()){
@@ -94,7 +95,7 @@ public class GroupSelectorPanel extends JPanel {
 		applyButton.removeActionListener(saveListener);
 		deleteButton.removeActionListener(deleteListener);
 
-		currentRandomActivity = randomActivity;
+		updateRandomActivity(randomActivity);
 		
 		saveListener = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -103,12 +104,12 @@ public class GroupSelectorPanel extends JPanel {
 				currentRandomActivity.setName(locationSelector.name);
 				currentRandomActivity.setLocation(locationSelector.location);
 				currentRandomActivity.setGroup(groupSelector.groupList);
-				randomActivityOptionsPanel.updateRandomActivityList(currentRandomActivity);
+				randomActivityOptionsPanel.updateRandomActivityList();
 			}
 		};
 		deleteListener = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Data.getData().getRandomActivityList().remove(Data.getData().getRandomActivityList().indexOf(currentRandomActivity));
+				Data.getData().getRandomActivityList().remove(currentRandomActivity);
 				randomActivityOptionsPanel.updateRandomActivityList(currentRandomActivity);
 			}
 		};

@@ -116,6 +116,7 @@ public class LocationOptionsPanel extends JPanel{
 	}
 
 	public void updateLocationList(Location currentLocation) {
+		LocationPanel toRemove = null;
 		for(LocationPanel panel : locationPanelList){
 			if(panel.getCurrentLocation().equals(currentLocation)){
 				remove(panel);
@@ -123,6 +124,7 @@ public class LocationOptionsPanel extends JPanel{
 				panel.updateLocation();
 			}
 		}
+		locationPanelList.remove(toRemove);
 		validate();
 	}
 

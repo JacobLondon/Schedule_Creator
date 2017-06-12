@@ -43,6 +43,10 @@ public class RandomActivityOptionsPanel extends JPanel {
 		// Sub-panel creation
 		JPanel leftPanel = new JPanel();
 		
+		if(Data.getData().getRandomActivityList().size() > 0){
+			currentRandomActivity = Data.getData().getRandomActivityList().get(0);
+		}
+		
 		//TODO: no location and no group cases
 		centerPanel = new LocationSelectorPanel(Data.getData().getRandomActivityList().get(0), this);
 		rightPanel = new GroupSelectorPanel(Data.getData().getRandomActivityList().get(0), this, currentRandomActivity, centerPanel);
@@ -90,11 +94,6 @@ public class RandomActivityOptionsPanel extends JPanel {
 		add(mainPanel, BorderLayout.CENTER);
 		
 		for(final RandomActivity randomActivity : Data.getData().getRandomActivityList()){
-			
-			
-			if(currentRandomActivity == null){
-				currentRandomActivity = randomActivity;
-			}
 			RandomActivityPanel randomActivityPanel = new RandomActivityPanel(randomActivity, new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					selectRandomActivity(randomActivity);
@@ -117,6 +116,7 @@ public class RandomActivityOptionsPanel extends JPanel {
 						}
 					});
 					addScrollPanel.add(randomActivityPanel);
+					randomActivityPanelList.add(randomActivityPanel);
 					addField.setText("");
 					validate();
 				}
@@ -138,14 +138,20 @@ public class RandomActivityOptionsPanel extends JPanel {
 	}
 	
 	public void updateRandomActivityList(RandomActivity currentRandomActivity) {
+		RandomActivityPanel toRemove = null;
 		for(RandomActivityPanel panel : randomActivityPanelList){
 			if(panel.getCurrentRandomActivity().equals(currentRandomActivity)){
-				remove(panel);
+				addScrollPanel.remove(panel);
+				toRemove = panel;
 			} else {
 				panel.updateRandomActivity();
 			}
 		}
+		randomActivityPanelList.remove(toRemove);
 		validate();
+	}
+	public void updateRandomActivityList(){
+		updateRandomActivityList(null);
 	}
 
 }

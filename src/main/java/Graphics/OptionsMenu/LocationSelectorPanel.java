@@ -56,7 +56,7 @@ public class LocationSelectorPanel extends JPanel {
 	class GetLocationSelectorInfo{
 		
 		public String name;
-		public ArrayList<Location> location;
+		public ArrayList<Location> location = new ArrayList<Location>();
 		public GetLocationSelectorInfo(JTextField nameField, ArrayList<LocationCheckBox> locationList){
 			this.name = nameField.getText();
 			
@@ -74,8 +74,11 @@ public class LocationSelectorPanel extends JPanel {
 	}
 	
 	public void setCurrentRandomActivity(RandomActivity randomActivity) {
-		
+		this.randomActivity = randomActivity;
 		nameField.setText(randomActivity.getName());
+		for(LocationCheckBox box : locationList){
+			box.updateRandomActivity(randomActivity);
+		}
 	}
 	
 	public void updateRandomActivity(RandomActivity randomActivity){
