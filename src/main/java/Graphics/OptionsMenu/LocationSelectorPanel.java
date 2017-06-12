@@ -1,6 +1,8 @@
 package Graphics.OptionsMenu;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -21,8 +23,9 @@ public class LocationSelectorPanel extends JPanel {
 	
 	private JPanel scrollPanel;
 	private JTextField nameField;
+	private RandomActivityOptionsPanel randomActivityOptionsPanel;
 	
-	public LocationSelectorPanel(RandomActivity randomActivity){
+	public LocationSelectorPanel(RandomActivity randomActivity, RandomActivityOptionsPanel randomActivityOptionsPanel){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		nameField = new JTextField(14);
@@ -46,11 +49,34 @@ public class LocationSelectorPanel extends JPanel {
 		}
 		locationScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		
-		
 		validate();
+		
 	}
 	
+	class GetLocationSelectorInfo{
+		
+		public String name;
+		public ArrayList<Location> location;
+		public GetLocationSelectorInfo(JTextField nameField, ArrayList<LocationCheckBox> locationList){
+			this.name = nameField.getText();
+			
+			for(LocationCheckBox checkBox : locationList){
+				if(checkBox.isSelected()){
+					location.add(checkBox.location);
+				}
+			}
+			
+		}
+	}
 	
+	public GetLocationSelectorInfo getLocationSelectorInfo(){
+		return new GetLocationSelectorInfo(nameField, locationList);
+	}
+	
+	public void setCurrentRandomActivity(RandomActivity randomActivity) {
+		
+		nameField.setText(randomActivity.getName());
+	}
 	
 	public void updateRandomActivity(RandomActivity randomActivity){
 		

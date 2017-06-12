@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import DataTypes.Group;
 import DataTypes.Location;
 import DataTypes.RandomActivity;
+import Graphics.OptionsMenu.LocationSelectorPanel.GetLocationSelectorInfo;
 import Resources.Data;
 
 public class GroupSelectorPanel extends JPanel {
@@ -33,11 +34,13 @@ public class GroupSelectorPanel extends JPanel {
 	private ActionListener saveListener;
 	private ActionListener deleteListener;
 	private RandomActivityOptionsPanel randomActivityOptionsPanel;
+	private LocationSelectorPanel locationSelectorPanel;
 	
-	public GroupSelectorPanel(RandomActivity currentRandomActivity, RandomActivityOptionsPanel randomActivityOptionsPanel, RandomActivity randomActivity){
+	public GroupSelectorPanel(RandomActivity currentRandomActivity, RandomActivityOptionsPanel randomActivityOptionsPanel, RandomActivity randomActivity, LocationSelectorPanel locationSelectorPanel){
 		this.randomActivityOptionsPanel = randomActivityOptionsPanel;
 		this.randomActivity = randomActivity;
 		this.currentRandomActivity = currentRandomActivity;
+		this.locationSelectorPanel = locationSelectorPanel;
 		
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
@@ -66,6 +69,18 @@ public class GroupSelectorPanel extends JPanel {
 		validate();
 	}
 	
+	class GetGroupSelectorInfo{
+		
+		public ArrayList<Group> groupList;
+		public GetGroupSelectorInfo(ArrayList<GroupCheckBox> groupCheckBoxList){
+			for(GroupCheckBox groupCheck : groupCheckBoxList){
+				if(groupCheck.isSelected()){
+					groupList.add(groupCheck.group);
+				}
+			}
+		}
+	}
+	
 	public void updateRandomActivity(RandomActivity randomActivity){
 		
 		this.randomActivity = randomActivity;
@@ -83,12 +98,17 @@ public class GroupSelectorPanel extends JPanel {
 		
 		saveListener = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				RandomActivityOptionsPanel.updateRandomActivityList();
+				GetLocationSelectorInfo locationSelector = locationSelectorPanel.getLocationSelectorInfo();
+				GetGroupSelectorInfo groupSelector = new GetGroupSelectorInfo(groupList);
+				currentRandomActivity.setName(locationSelector.name);
+				currentRandomActivity.setLocation(locationSelector.location);
+				currentRandomActivity.setGroup(groupSelector.groupList);
+				randomActivityOptionsPanel.updateRandomActivityList(currentRandomActivity);
 			}
 		};
 		deleteListener = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Data.getData().getLocationList().remove(Data.getData().getLocationList().indexOf(currentRandomActivity));
+				Data.getData().getRandomActivityList().remove(Data.getData().getRandomActivityList().indexOf(currentRandomActivity));
 				randomActivityOptionsPanel.updateRandomActivityList(currentRandomActivity);
 			}
 		};
