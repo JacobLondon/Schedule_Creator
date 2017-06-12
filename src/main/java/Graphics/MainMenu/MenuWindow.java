@@ -7,6 +7,9 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import DataTypes.Preset;
+import Graphics.OnCloseCallback;
+import Graphics.ScheduleWindow;
 import Graphics.OptionsMenu.OptionsMenu;
 import Resources.Data;
 
@@ -47,6 +50,15 @@ public class MenuWindow extends JFrame {
 	
 	public void openOptionsMenu(){
 		layout.show(getContentPane(), OPTIONS_MENU);
+	}
+	
+	public void openGeneratedScheduleWindow(Preset preset){
+		setVisible(false);
+		new ScheduleWindow(preset, new OnCloseCallback(){
+			public void onClose(){
+				setVisible(true);
+			}
+		});
 	}
 	
 	@Override

@@ -57,6 +57,12 @@ public class MainMenu extends JPanel {
 			}
 		});
 		
+		generateScheduleButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				window.openGeneratedScheduleWindow((Preset)(dayPickerBox.getSelectedItem()));
+			}
+		});
+		
 		// menu spacing / sizing
 		//optionsButton.
 		//generateScheduleButton.

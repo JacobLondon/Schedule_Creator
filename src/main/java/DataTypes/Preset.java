@@ -129,4 +129,16 @@ public class Preset implements Serializable {
 		
 	}
 
+	public int getNumSubgroups() {
+		int total = 0;
+		for(Group currGroup : groupList){
+			total += currGroup.getSubGroupCount();
+		}
+		return total;
+	}
+
+	public ArrayList<Group> getGroupList() {
+		return groupList;
+	}
+
 }
