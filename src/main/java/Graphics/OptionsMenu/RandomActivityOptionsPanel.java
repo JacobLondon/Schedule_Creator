@@ -44,8 +44,8 @@ public class RandomActivityOptionsPanel extends JPanel {
 		JPanel leftPanel = new JPanel();
 		
 		//TODO: no location and no group cases
-		centerPanel = new LocationSelectorPanel(Data.getData().getRandomActivityList().get(0));
-		rightPanel = new GroupSelectorPanel(Data.getData().getRandomActivityList().get(0));
+		centerPanel = new LocationSelectorPanel(Data.getData().getRandomActivityList().get(0), this);
+		rightPanel = new GroupSelectorPanel(Data.getData().getRandomActivityList().get(0), this, currentRandomActivity, centerPanel);
 		
 		leftPanel.setPreferredSize(Resources.Layout.TRIPLE_PANEL);
 		centerPanel.setPreferredSize(Resources.Layout.TRIPLE_PANEL);

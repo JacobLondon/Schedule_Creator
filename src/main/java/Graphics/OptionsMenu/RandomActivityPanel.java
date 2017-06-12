@@ -50,4 +50,9 @@ public class RandomActivityPanel extends JPanel {
 	public RandomActivity getCurrentRandomActivity(){
 		return randomActivity;
 	}
+	
+	public void updateRandomActivity() {
+		randomActivityLabel.setText(randomActivity.getName());
+		validate();
+	}
 }
