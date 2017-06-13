@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.Icon;
 
-public class RandomActivity implements Serializable {
+public class RandomActivity implements Serializable, Activity {
 
 	private static final long serialVersionUID = 2L;
 	

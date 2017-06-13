@@ -1,16 +1,22 @@
 package Graphics;
 
 import java.awt.Component;
+import java.awt.GridLayout;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import DataTypes.Activity;
 import DataTypes.Group;
+import DataTypes.PlannedActivity;
 import DataTypes.Preset;
+import DataTypes.RandomActivity;
 import Resources.Data;
 
 public class SchedulePanel extends JScrollPane {
@@ -21,26 +27,55 @@ public class SchedulePanel extends JScrollPane {
 	private JButton saveButton = new JButton("Save");
 	
 	private JComponent[][] panelData;
-
+	private int width;
+	private int height;
+	private FillRandomActivity fillRandomActivity;
+	
 	public SchedulePanel(Preset preset, Data data) {
 		this.preset = preset;
 		this.data = data;
+		fillRandomActivity = new FillRandomActivity(preset);
 		panelData = new JComponent[preset.getNumSubgroups() + 1][preset.getSlotNumber() + 1];
+		
 		// Put save button in top left
 		panelData[0][0] = saveButton;
+		width = panelData.length;
+		height = panelData[0].length;
+		
 		addGroupNames();
 		addTimes();
 		setSchedule();
+		addPanelInfo();
+		
+		validate();
 	}
-
+	
 	private void setSchedule() {
-		for(int x = 1; x < panelData.length; x++){
-			for(int y = 1; y < panelData[x].length; y++){
-				//TODO Make schedule panel
+		
+		Vector<Activity> activityList = new Vector<Activity>(Data.getData().getRandomActivityList());
+		activityList.addAll(Data.getData().getPlannedActivityList());
+		
+		for(int x = 1; x < width; x++){
+			for(int y = 1; y < height; y++){
+				JComboBox gridBox = new JComboBox(activityList);
+				gridBox.setEditable(true);
+				panelData[x][y] = gridBox;
 			}
 		}
 	}
 
+	private void addPanelInfo(){
+		
+		setLayout(new GridLayout(height, width));
+		
+		for(int y = 0; y < height; y++){
+			for(int x = 0; x < width; x++){
+				add(panelData[x][y]);
+				
+			}
+		}
+	}
+	
 	private Group getGroupFromColumn(int column){
 		for(Group curr : preset.getGroupList()){
 			if(column < curr.getSubGroupCount()){

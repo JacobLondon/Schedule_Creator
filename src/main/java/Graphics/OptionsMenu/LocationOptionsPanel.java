@@ -99,6 +99,7 @@ public class LocationOptionsPanel extends JPanel{
 						}
 					});
 					addScrollPanel.add(locationPanel);
+					locationPanelList.add(locationPanel);
 					addField.setText("");
 					validate();
 				}
@@ -119,7 +120,7 @@ public class LocationOptionsPanel extends JPanel{
 		LocationPanel toRemove = null;
 		for(LocationPanel panel : locationPanelList){
 			if(panel.getCurrentLocation().equals(currentLocation)){
-				remove(panel);
+				addScrollPanel.remove(panel);
 			} else {
 				panel.updateLocation();
 			}

@@ -3,7 +3,7 @@ package DataTypes;
 import java.awt.Color;
 import java.io.Serializable;
 
-public class PlannedActivity implements Serializable {
+public class PlannedActivity implements Serializable, Activity {
 
 	private static final long serialVersionUID = 1L;
 	

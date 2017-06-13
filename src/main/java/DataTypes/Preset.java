@@ -41,6 +41,13 @@ public class Preset implements Serializable {
 		}		
 	}
 	
+	public ArrayList<ArrayList<String>> getPresetSchedule(){
+		return presetSchedule;
+	}
+	public void setPresetSchedule(ArrayList<ArrayList<String>> schedule){
+		presetSchedule = schedule;
+	}
+	
 	private int countSubgroups(){
 		int countGroups = 0;
 		for(Group traverse : groupList){
