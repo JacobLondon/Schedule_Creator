@@ -104,14 +104,14 @@ public class FillActivity {
 	 */
 	private int findGroup(int groupNum){
 		for(int i = 0; i < preset.getGroupList().size(); i++){
-			if(groupNum - preset.getGroupList().get(i).getSubGroupCount() >= 0){
-				groupNum -= preset.getGroupList().get(i).getSubGroupCount();
-			}
-			else{
+			if(preset.getGroupList().get(i).getSubGroupCount() >= groupNum){
 				return groupNum;
 			}
-			
+			else{
+				groupNum -= preset.getGroupList().get(i).getSubGroupCount();
+			}
 		}
+		return -1;
 		
 	}
 }
