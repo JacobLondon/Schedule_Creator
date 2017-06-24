@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.RandomActivitiesTab;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -81,13 +81,6 @@ public class LocationSelectorPanel extends JPanel {
 		}
 	}
 	
-	public void updateRandomActivity(RandomActivity randomActivity){
-		
-		this.randomActivity = randomActivity;
-		for(LocationCheckBox locationBoxes : locationList){
-			locationBoxes.updateRandomActivity(randomActivity);
-		}
-	}
 	
 	private class LocationCheckBox extends JCheckBox{
 		

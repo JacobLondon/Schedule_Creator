@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.PresetsTab;
 
 import java.time.format.DateTimeFormatter;
 

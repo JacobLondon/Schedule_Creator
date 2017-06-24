@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.PresetsTab;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,7 +27,7 @@ import Resources.Data;
 
 public class PresetOptionsPanel extends JPanel implements Updateable{
 
-	private Graphics.OptionsMenu.PresetOptionsPanel.PresetPointer presetPointer;
+	private Graphics.OptionsMenu.PresetsTab.PresetOptionsPanel.PresetPointer presetPointer;
 	private static final String TIMING_SETUP = "Timing Setup";
 	private static final String ACTIVITY_PLAN = "Activity Plan";
 	

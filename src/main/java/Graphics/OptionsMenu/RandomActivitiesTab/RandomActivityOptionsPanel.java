@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.RandomActivitiesTab;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -49,7 +49,7 @@ public class RandomActivityOptionsPanel extends JPanel {
 		
 		//TODO: no location and no group cases
 		centerPanel = new LocationSelectorPanel(Data.getData().getRandomActivityList().get(0), this);
-		rightPanel = new GroupSelectorPanel(Data.getData().getRandomActivityList().get(0), this, currentRandomActivity, centerPanel);
+		rightPanel = new GroupSelectorPanel(this, currentRandomActivity, centerPanel);
 		
 		leftPanel.setPreferredSize(Resources.Layout.TRIPLE_PANEL);
 		centerPanel.setPreferredSize(Resources.Layout.TRIPLE_PANEL);
@@ -148,6 +148,8 @@ public class RandomActivityOptionsPanel extends JPanel {
 			}
 		}
 		randomActivityPanelList.remove(toRemove);
+		// TODO: Case when empty
+		selectRandomActivity(randomActivityPanelList.get(0).getCurrentRandomActivity());
 		validate();
 	}
 	public void updateRandomActivityList(){

@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.PresetsTab;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import DataTypes.Preset;
-import Graphics.OptionsMenu.PresetOptionsPanel.PresetPointer;
+import Graphics.OptionsMenu.PresetsTab.PresetOptionsPanel.PresetPointer;
 import Resources.Fonts;
 
 public class PresetPanel extends JPanel {

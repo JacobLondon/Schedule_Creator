@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.LocationsTab;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

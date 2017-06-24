@@ -13,6 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import Graphics.MainMenu.MenuWindow;
+import Graphics.OptionsMenu.AboutTab.AboutPanel;
+import Graphics.OptionsMenu.CampInfoTab.CampInfoPanel;
+import Graphics.OptionsMenu.LocationsTab.LocationOptionsPanel;
+import Graphics.OptionsMenu.PlannedActivitiesTab.PlannedActivityOptionsPanel;
+import Graphics.OptionsMenu.PresetsTab.PresetOptionsPanel;
+import Graphics.OptionsMenu.RandomActivitiesTab.RandomActivityOptionsPanel;
 import Resources.Data;
 
 public class OptionsMenu extends JPanel {

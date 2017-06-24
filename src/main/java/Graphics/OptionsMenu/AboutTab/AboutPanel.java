@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.AboutTab;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

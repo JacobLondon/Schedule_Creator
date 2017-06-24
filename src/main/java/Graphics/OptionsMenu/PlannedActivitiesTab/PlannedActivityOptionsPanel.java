@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.PlannedActivitiesTab;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

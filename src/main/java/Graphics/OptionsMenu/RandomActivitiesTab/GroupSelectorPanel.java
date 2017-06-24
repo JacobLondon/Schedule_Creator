@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.RandomActivitiesTab;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -16,14 +16,13 @@ import javax.swing.JScrollPane;
 import DataTypes.Group;
 import DataTypes.Location;
 import DataTypes.RandomActivity;
-import Graphics.OptionsMenu.LocationSelectorPanel.GetLocationSelectorInfo;
+import Graphics.OptionsMenu.RandomActivitiesTab.LocationSelectorPanel.GetLocationSelectorInfo;
 import Resources.Data;
 
 public class GroupSelectorPanel extends JPanel {
 
 	private JScrollPane groupScrollPane;
 	private ArrayList<GroupCheckBox> groupList = new ArrayList<GroupCheckBox>();
-	private RandomActivity randomActivity;
 	
 	private JPanel scrollPanel;
 	
@@ -36,9 +35,8 @@ public class GroupSelectorPanel extends JPanel {
 	private RandomActivityOptionsPanel randomActivityOptionsPanel;
 	private LocationSelectorPanel locationSelectorPanel;
 	
-	public GroupSelectorPanel(RandomActivity currentRandomActivity, RandomActivityOptionsPanel randomActivityOptionsPanel, RandomActivity randomActivity, LocationSelectorPanel locationSelectorPanel){
+	public GroupSelectorPanel(RandomActivityOptionsPanel randomActivityOptionsPanel, RandomActivity currentRandomActivity, LocationSelectorPanel locationSelectorPanel){
 		this.randomActivityOptionsPanel = randomActivityOptionsPanel;
-		this.randomActivity = randomActivity;
 		this.currentRandomActivity = currentRandomActivity;
 		this.locationSelectorPanel = locationSelectorPanel;
 		
@@ -61,7 +59,7 @@ public class GroupSelectorPanel extends JPanel {
 		add(groupScrollPane);
 		
 		for(Group group : Data.getData().getGroupList()){
-			GroupCheckBox groupCheckBox = new GroupCheckBox(group, randomActivity);
+			GroupCheckBox groupCheckBox = new GroupCheckBox(group, currentRandomActivity);
 			scrollPanel.add(groupCheckBox);
 			groupList.add(groupCheckBox);
 		}
@@ -84,7 +82,7 @@ public class GroupSelectorPanel extends JPanel {
 	
 	public void updateRandomActivity(RandomActivity randomActivity){
 		
-		this.randomActivity = randomActivity;
+		this.currentRandomActivity = randomActivity;
 		for(GroupCheckBox groupBoxes : groupList){
 			groupBoxes.updateRandomActivity(randomActivity);
 			

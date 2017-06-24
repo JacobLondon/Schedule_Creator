@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.RandomActivitiesTab;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

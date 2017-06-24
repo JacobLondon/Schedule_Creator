@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.LocationsTab;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;

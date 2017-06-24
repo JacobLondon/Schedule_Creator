@@ -1,4 +1,4 @@
-package Graphics.OptionsMenu;
+package Graphics.OptionsMenu.PresetsTab;
 
 import java.awt.BorderLayout;
 import java.time.LocalTime;
