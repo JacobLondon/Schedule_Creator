@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import DataTypes.Activity;
@@ -19,7 +20,7 @@ import DataTypes.Preset;
 import DataTypes.RandomActivity;
 import Resources.Data;
 
-public class SchedulePanel extends JScrollPane {
+public class SchedulePanel extends JPanel {
 	
 	private Preset preset;
 	private Data data;
@@ -29,12 +30,12 @@ public class SchedulePanel extends JScrollPane {
 	private JComponent[][] panelData;
 	private int width;
 	private int height;
-	private FillRandomActivity fillRandomActivity;
+	private FillActivity fillActivity;
 	
-	public SchedulePanel(Preset preset, Data data) {
+	public SchedulePanel(Preset preset, Data data) throws NotEnoughRandomActivitiesException {
 		this.preset = preset;
 		this.data = data;
-		fillRandomActivity = new FillRandomActivity(preset);
+		fillActivity = new FillActivity(preset);
 		panelData = new JComponent[preset.getNumSubgroups() + 1][preset.getSlotNumber() + 1];
 		
 		// Put save button in top left
@@ -46,8 +47,21 @@ public class SchedulePanel extends JScrollPane {
 		addTimes();
 		setSchedule();
 		addPanelInfo();
+		fillActivity.fillActivity();
+		selectComboBoxes();
 		
 		validate();
+	}
+	
+	/**
+	 * Fills all the ComboBoxes with the corresponding RandomActivities.
+	 */
+	private void selectComboBoxes(){
+		for(int x = 1; x < panelData.length; x++){
+			for(int y = 1; y < panelData[x].length; y++){
+				((JComboBox) panelData[x][y]).setSelectedItem(fillActivity.getActivities().get(y-1).get(x-1));
+			}
+		}
 	}
 	
 	private void setSchedule() {
@@ -95,7 +109,7 @@ public class SchedulePanel extends JScrollPane {
 					.append(" - ")
 					.append(preset.getStartTime().plusMinutes(preset.getIntervalTime() * (count + 1)).format(formatter))
 					.toString());
-			
+			count++;
 		}
 	}
 

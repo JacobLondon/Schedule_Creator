@@ -12,14 +12,13 @@ public class FillActivity {
 	private String[][] outputArray;
 	
 	// elements are stored here when they are temporarily removed from presetScheduleForEachGroup
-	private ArrayList<String> randomActivityPerRow = new ArrayList<String>();
 	private Preset preset;
 	private ArrayList<ArrayList<String>> presetSchedule;
-	private ArrayList<ArrayList<String>> presetScheduleCopy;
+	private ArrayList<ArrayList<String>> presetScheduleCopy = new ArrayList<ArrayList<String>>();
 	private ArrayList<RandomActivity> randomActivityList = Data.getData().getRandomActivityList();
-	private ArrayList<PlannedActivity> plannedActivityList = Data.getData().getPlannedActivityList();
 	
-	private ArrayList<ArrayList<String>> presetScheduleForEachGroup;
+	private ArrayList<ArrayList<String>> presetScheduleXForEachGroup;
+	private ArrayList<ArrayList<String>> presetScheduleYForEachGroup = new ArrayList<ArrayList<String>>();
 	
 	private int totalNumSubGroups = 0;
 	
@@ -35,28 +34,57 @@ public class FillActivity {
 		// Make a deep copy of preset schedule
 		for(int i = 0; i < presetSchedule.size(); i++){
 			presetScheduleCopy.add(new ArrayList<String>());
-			for(int j = 0; j < presetSchedule.get(i).size(); i++){
+			for(int j = 0; j < presetSchedule.get(i).size(); j++){
 				presetScheduleCopy.get(i).add(presetSchedule.get(i).get(j));
 			}
 		}
 		
 	}
 	
-	public void fillActivity(){
+	public ArrayList<ArrayList<String>> getActivities(){
+		return presetScheduleCopy;
+	}
+	
+	public void fillActivity() throws NotEnoughRandomActivitiesException {
 		
+		// Fill the Y check with sub-arrays
+		for(int i = 0; i < totalNumSubGroups; i++){
+			presetScheduleYForEachGroup.add(new ArrayList<String>());
+		}
+		
+		// Scan for Random and replace with a randomly chosen RandomActivity
 		for(int i = 0; i < preset.getSlotNumber(); i++){
-			 
+			refillElements();
+			
 			// each row
 			for(int j = 0; j < totalNumSubGroups; j++){
+				
 				if(presetScheduleCopy.get(i).get(j).equals("Random")){
+					if(presetScheduleXForEachGroup.get(findGroup(j)).isEmpty()){
+						throw new NotEnoughRandomActivitiesException("Ran out of random activities while generating schedule.");
+					}
+					do{
+						presetScheduleCopy.get(i).set(j, getRandomElement(presetScheduleXForEachGroup.get(findGroup(j))));
+					}while(presetScheduleYForEachGroup.get(j).contains(presetScheduleCopy.get(i).get(j)));
+					
+					presetScheduleYForEachGroup.get(j).add(presetScheduleCopy.get(i).get(j));
+					removeElement(presetScheduleCopy.get(i).get(j), j);
 					
 				}
-				else if(!presetScheduleCopy.get(i).get(j).equals("Random")){
-					//not random, but planned
-				}
+				// planned activities are already there
+								
 			}
 		}
 		
+	}
+	
+	/**
+	 * 
+	 * @param stringList ArrayList of Strings with elements.
+	 * @return A random element within the ArrayList.
+	 */
+	private String getRandomElement(ArrayList<String> stringList){
+		return stringList.get((int)(stringList.size()*Math.random()));
 	}
 	
 	/**
@@ -83,11 +111,11 @@ public class FillActivity {
 	 * Adds the removed element into another ArrayList to keep track of elements.
 	 * @param element The String to be removed from the ArrayList.
 	 */
-	private void removeElement(String element){
-		for(int i = 0; i < presetScheduleForEachGroup.size(); i++){
-			for(int j = 0; j < presetScheduleForEachGroup.get(i).size(); j++){
-				if(presetScheduleForEachGroup.get(i).get(j).equals(element)){
-					presetScheduleForEachGroup.get(i).remove(j);
+	private void removeElement(String element, int subGroupNumber){
+		for(int i = 0; i < presetScheduleXForEachGroup.size(); i++){
+			for(int j = 0; j < presetScheduleXForEachGroup.get(i).size(); j++){
+				if(presetScheduleXForEachGroup.get(i).get(j).equals(element)){
+					presetScheduleXForEachGroup.get(i).remove(j);
 				}
 			}
 		}
@@ -96,7 +124,7 @@ public class FillActivity {
 	//GitHub webhook test :D?
 	
 	private void refillElements(){
-		presetScheduleForEachGroup = createGroupListForRandomActivities();
+		presetScheduleXForEachGroup = createGroupListForRandomActivities();
 	}
 	
 	/**

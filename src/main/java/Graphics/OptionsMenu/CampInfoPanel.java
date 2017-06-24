@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import DataTypes.Group;
 import Resources.Data;
+import Resources.Images;
 
 public class CampInfoPanel extends JPanel {
 
@@ -44,7 +45,8 @@ public class CampInfoPanel extends JPanel {
 		leftPanel.add(Box.createVerticalGlue());
 		leftPanel.add(Box.createVerticalGlue());
 		
-		JLabel campLogo = new JLabel(new ImageIcon(getClass().getResource("/camp_logo.jpg")));
+		// TODO: Fix in jar 
+		JLabel campLogo = new JLabel(new ImageIcon());//Images.getCampLogo()));
 		leftPanel.add(campLogo);
 		leftPanel.add(Box.createVerticalGlue());
 		
