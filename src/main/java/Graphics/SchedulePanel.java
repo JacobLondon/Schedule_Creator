@@ -1,9 +1,7 @@
 package Graphics;
 
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -11,13 +9,9 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import DataTypes.Activity;
 import DataTypes.Group;
-import DataTypes.PlannedActivity;
 import DataTypes.Preset;
-import DataTypes.RandomActivity;
 import Resources.Data;
 
 public class SchedulePanel extends JPanel {

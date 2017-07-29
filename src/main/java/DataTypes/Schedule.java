@@ -3,12 +3,51 @@ package DataTypes;
 import java.awt.Color;
 import java.util.Date;
 
+import javax.swing.JComponent;
+
 import org.apache.poi.xssf.usermodel.XSSFColor;
+
+import Resources.Data;
 
 public class Schedule {
 	
-	public Schedule(){
+	private Data data = Data.getData();
+	private Color[][] foregroundColors;
+	private Color[][] backgroundColors;
+	private String[][] boxText;
+	
+	public Schedule(JComponent[][] panelData){
+		foregroundColors = new Color[panelData.length][panelData[0].length];
+		backgroundColors = new Color[panelData.length][panelData[0].length];
+		boxText = new String[panelData.length][panelData[0].length];
 		
+		// fill the text in the boxes
+		for(int x = 0; x < panelData.length; x++){
+			for(int y = 0; y < panelData[x].length; y++){
+				boxText[x][y] = panelData[x][y].getName();
+			}
+		}
+		
+		// fill the colors
+		for(int x = 0; x < panelData.length; x++){
+			for(int y = 0; y < panelData[x].length; y++){
+				if(x == 0 || y == 0){
+					foregroundColors[x][y] = Color.BLACK;
+				}
+				// check the planned activities for colors
+				for(int i = 0; i < data.getPlannedActivityList().size(); i++){
+					if(panelData[x][y].getName().equals(data.getPlannedActivityList().get(i).getName())){
+						foregroundColors[x][y] = data.getPlannedActivityList().get(i).getLocation().getLocationColor().getColor();
+					}
+				}
+				// check the random activities for colors
+				for(int i = 0; i < data.getRandomActivityList().size(); i++){
+					if(panelData[x][y].getName().equals(data.getRandomActivityList().get(i).getName())){
+						foregroundColors[x][y] = data.getRandomActivityList().get(i).getLocations()
+					}
+				}
+			}
+		}
 	}
 
 	/**
