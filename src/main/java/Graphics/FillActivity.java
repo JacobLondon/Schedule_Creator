@@ -71,11 +71,9 @@ public class FillActivity {
 					removeElement(presetScheduleCopy.get(i).get(j), j);
 					
 				}
-				// planned activities are already there
-								
+				// planned activities are already there				
 			}
 		}
-		
 	}
 	
 	/**
@@ -98,6 +96,9 @@ public class FillActivity {
 		for(int i = 0; i < preset.getGroupList().size(); i++){
 			outputList.add(new ArrayList<String>());
 			for(int j = 0; j < randomActivityList.size(); j++){
+				
+				// looks at the next randomActivity which has a list of groups that the activity is able to be done by
+				// the column that the groups is in needs to also exist in the list of groups that can do the randomActivity
 				if(randomActivityList.get(j).groupIsIngroupList(preset.getGroupList().get(i))){
 					outputList.get(i).add(randomActivityList.get(j).getName());
 				}
@@ -123,6 +124,7 @@ public class FillActivity {
 	
 	//GitHub webhook test :D?
 	
+	// list of randomActivities that cannot also be put into the same row reset
 	private void refillElements(){
 		presetScheduleXForEachGroup = createGroupListForRandomActivities();
 	}
